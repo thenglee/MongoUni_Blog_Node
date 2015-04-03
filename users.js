@@ -34,11 +34,10 @@ function UsersDAO(db) {
 
             if (insertedUser){
                 callback(null, user);
-            }else{
-                callback(Error("addUser Not Yet Implemented!"), null);
             }
         });
 
+        //callback(Error("addUser Not Yet Implemented!"), null);
         
     }
 
@@ -71,7 +70,11 @@ function UsersDAO(db) {
         }
 
         // TODO: hw2.3
-        callback(Error("validateLogin Not Yet Implemented!"), null);
+        users.findOne({'_id': username}, function(err, resultUser){
+            validateUserDoc(err,resultUser);   
+        });
+
+        //callback(Error("validateLogin Not Yet Implemented!"), null);
     }
 }
 
