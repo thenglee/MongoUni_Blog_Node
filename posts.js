@@ -30,12 +30,10 @@ function PostsDAO(db) {
 
         // now insert the post
         // hw3.2 TODO
-        //callback(Error("insertEntry Not Yet Implemented!"), null);
-
         posts.insert(post, function(err, result){
-            if (err) return err;
-            console.log("One new post inserted")
-            callback(err, result[0].permalink);
+            if (err) return callback(err, null);
+
+            callback(null, result[0].permalink);
         });
     }
 
@@ -88,7 +86,23 @@ function PostsDAO(db) {
         }
 
         // hw3.3 TODO
-        callback(Error("addComment Not Yet Implemented!"), null);
+        posts.findOne({'permalink': permalink}, function(err, doc){
+            if (err) return callback(err, null);
+
+            if (doc){
+                console.log("Found post");
+                doc.comments.push(comment);
+                posts.save(doc, function(err, result){
+                    if (err) return callback(err, null);
+                    console.log("Added comment " + result);
+                    callback(null, result);
+                });
+            }else{
+                console.log("No post found");
+                return callback(null, 0);
+            }
+        });
+
     }
 }
 
