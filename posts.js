@@ -30,7 +30,13 @@ function PostsDAO(db) {
 
         // now insert the post
         // hw3.2 TODO
-        callback(Error("insertEntry Not Yet Implemented!"), null);
+        //callback(Error("insertEntry Not Yet Implemented!"), null);
+
+        posts.insert(post, function(err, result){
+            if (err) return err;
+            console.log("One new post inserted")
+            callback(err, result[0].permalink);
+        });
     }
 
     this.getPosts = function(num, callback) {
